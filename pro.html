@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+</head>
+
+<body>
+    <input type="text" id="city" placeholder="Enter City Name">
+    <button onclick="getWeather()">Search</button>
+    <div id="result"></div>
+
+    <script>
+        function getWeather() {
+
+            var city = document.getElementById("city").value;
+
+            fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=b7bac4e7c8c8dcffacbe67a72e6cc2ae")
+
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    display(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+        function display(data) {
+
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            var div = document.createElement("div");
+
+            var city = document.createElement("h2");
+            city.innerText = data.name;
+
+            var temp = document.createElement("h1");
+            temp.innerText = "Temperature " + data.main.temp + " °C";
+
+            var humidity = document.createElement("h3");
+            humidity.innerText = "Humidity : " + data.main.humidity + "%";
+
+            var weather = document.createElement("h3");
+            weather.innerText = "Today's Weather";
+
+            div.append(city, temp, weather, humidity);
+            result.append(div);    
+
+        }
+    </script>
+</body>
+
+</html>
